@@ -1,3 +1,5 @@
+version: 1
+
 project:
   root: .
   build_config: lzc-build.yml
