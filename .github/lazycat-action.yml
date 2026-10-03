@@ -24,11 +24,11 @@ images:
     # 映射成合法 SemVer：1.0.2b5 → 1.0.2-b5（与 package.yml 的 version 对得上）。
     # 等上游出 1.0.2 正式版时，把 tag_regex 换成 '^[0-9]+\.[0-9]+\.[0-9]+$' 即可切回稳定线。
     source: ghcr.io/tencentcloud/octop
-    channel: prerelease
+    channel: beta
     sort: semver
     tag_regex: '^[0-9]+\.[0-9]+\.[0-9]+b[0-9]+$'
-    version_regex: '^(?P<core>[0-9]+\.[0-9]+\.[0-9]+)b(?P<beta>[0-9]+)$'
-    version_template: '{core}-b{beta}'
+    version_regex: '^(?P<version>[0-9]+\.[0-9]+\.[0-9]+)b(?P<beta>[0-9]+)$'
+    version_template: '{version}-b{beta}'
     delivery:
       # 官方商店/镜像模式要求镜像来自懒猫镜像源：由 Action 转存并改写 manifest 里 octop 服务的 image
       mode: lazycat
