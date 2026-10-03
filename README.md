@@ -17,5 +17,6 @@
 
 ## 商店状态
 
-- **喵喵商店**：`cloud.lazycat.app.octop` 由 Action 发布（`stores.private`，`skip_if_version_exists: true`）。
+- **喵喵商店**：`cloud.lazycat.app.octop` **1.0.2-b5 已上架**（appId 518 / versionId 2224）。镜像已转存为 `registry.lazycat.cloud/czyt/tencentcloud/octop:02980826266165ac` 并写回清单；发布运行 [37088316371](https://github.com/lazycat-contrib/octop-lzcapp/actions/runs/37088316371)。之后每 6 小时探一次上游镜像，新 beta（1.0.2b6…）会自动走同一条链路。
 - **官方商店**：`stores.official.enabled: false` —— 暂不上架；需要时补 PC/手机截图与应用信息再打开。
+- 注：容器内行为以镜像自带健康检查（`/api/health`）为准；本仓库未在真机安装验证过登录、建模与对话流程。
