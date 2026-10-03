@@ -1,0 +1,44 @@
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: dist/octop.lpk
+  target_arch: amd64
+
+update:
+  strategy: publish
+  allow_downgrade: false
+  version_source:
+    type: image
+    image: octop
+
+build:
+  toolchains: []
+  run_buildscript: false
+
+images:
+  - id: octop
+    target: service
+    service: octop
+    # 上游现在只发 beta 线（1.0.2b1…b5），这里就按 beta 家族跟踪，并把非标 tag
+    # 映射成合法 SemVer：1.0.2b5 → 1.0.2-b5（与 package.yml 的 version 对得上）。
+    # 等上游出 1.0.2 正式版时，把 tag_regex 换成 '^[0-9]+\.[0-9]+\.[0-9]+$' 即可切回稳定线。
+    source: ghcr.io/tencentcloud/octop
+    channel: prerelease
+    sort: semver
+    tag_regex: '^[0-9]+\.[0-9]+\.[0-9]+b[0-9]+$'
+    version_regex: '^(?P<core>[0-9]+\.[0-9]+\.[0-9]+)b(?P<beta>[0-9]+)$'
+    version_template: '{core}-b{beta}'
+    delivery:
+      # 官方商店/镜像模式要求镜像来自懒猫镜像源：由 Action 转存并改写 manifest 里 octop 服务的 image
+      mode: lazycat
+
+stores:
+  official:
+    # 只发喵喵商店：官方店先不开（应用信息与 PC/手机截图等需要时再补）
+    enabled: false
+  private:
+    enabled: true
+    skip_if_version_exists: true
+    name: Octop
+    summary: "Octop 懒猫微服打包：腾讯云开源的自托管 AI 助手，多用户多 Agent + Web 控制台，数据留在自己盒子上。"

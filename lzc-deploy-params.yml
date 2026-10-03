@@ -1,0 +1,20 @@
+params:
+    - id: admin_password
+      type: secret
+      name: "Admin password"
+      description: "Password for the first admin account: at least 8 characters with both letters and digits. Leave blank to auto-generate one and write it to credential.txt in the data directory."
+      default_value: ""
+
+locales:
+    zh:
+        admin_password:
+            name: "管理员密码"
+            description: "首个管理员账号的密码：至少 8 位、同时含字母和数字。留空则自动生成随机密码，写进数据目录的 credential.txt。"
+    zh_CN:
+        admin_password:
+            name: "管理员密码"
+            description: "首个管理员账号的密码：至少 8 位、同时含字母和数字。留空则自动生成随机密码，写进数据目录的 credential.txt。"
+    en:
+        admin_password:
+            name: "Admin password"
+            description: "Password for the first admin account: at least 8 characters with both letters and digits. Leave blank to auto-generate (saved to credential.txt in the data directory)."

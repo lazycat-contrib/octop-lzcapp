@@ -1,0 +1,18 @@
+package: cloud.lazycat.app.octop
+version: 1.0.2-b5
+name: Octop
+description: A smarter, self-hosted AI assistant — multi-user, multi-agent, with a full web console, long-term memory and model providers, by Tencent Cloud. MIT licensed.
+min_os_version: 1.5.0
+homepage: https://github.com/TencentCloud/Octop
+author: TencentCloud
+license: MIT
+locales:
+  zh:
+    name: "Octop"
+    description: "腾讯云开源的自托管 AI 助手：多用户多 Agent，自带 Web 控制台、长期记忆、模型提供商与 Agent 运行时，数据留在自己的微服上。"
+  zh_CN:
+    name: "Octop"
+    description: "腾讯云开源的自托管 AI 助手：多用户多 Agent，自带 Web 控制台、长期记忆、模型提供商与 Agent 运行时，数据留在自己的微服上。"
+  en:
+    name: "Octop"
+    description: "A smarter, self-hosted AI assistant — multi-user, multi-agent, with a web console, long-term memory and model providers."

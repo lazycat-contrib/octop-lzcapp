@@ -1,0 +1,54 @@
+application:
+  subdomain: octop
+  multi_instance: false
+  upstreams:
+    - location: /
+      backend: http://octop:8088
+  # Octop 自带登录（首个管理员密码由安装向导填或自动生成），它是单机自托管的
+  # 个人 AI 助手，入口默认保留微服账号校验；要让外部客户端（IM 回调、Agent API）
+  # 直连时，再把它加进 public_path。
+services:
+  octop:
+    # 官方商店交付（delivery.mode=lazycat）时由 Action 转存到懒猫镜像源并改写此行
+    # upstream: ghcr.io/tencentcloud/octop:1.0.2b5
+    image: ghcr.io/tencentcloud/octop:1.0.2b5
+    # 镜像是 python:3.12-slim、默认 root；/lzcapp/var/octop 由平台以 root 创建，
+    # 用 root 起保证数据目录可写（上游 compose 也是让容器以 root 写 /data/.octop）
+    user: root
+    environment:
+      # 上游硬性要求：HOME=/data，~/.octop 才会落到挂载的数据目录
+      HOME: /data
+      OCTOP_BIND_HOST: 0.0.0.0
+      OCTOP_PORT: "8088"
+      OCTOP_LOG_LEVEL: info
+      OCTOP_ADMIN_USERNAME: admin
+      OCTOP_ADMIN_DISPLAY_NAME: Admin
+      # 留空则首次启动生成随机强密码并写进 /lzcapp/var/octop/credential.txt；
+      # 填了但不符合策略（≥8 位、同时含字母和数字）会退回随机密码，不会起不来
+      OCTOP_DEFAULT_PASSWORD: '{{ .U.admin_password }}'
+    healthcheck:
+      # 镜像里装了 curl；/api/health 由应用自己提供
+      test:
+        - CMD-SHELL
+        - curl -fsS http://127.0.0.1:8088/api/health || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    binds:
+      - /lzcapp/var/octop:/data/.octop
+usage: |
+  Octop 是腾讯云开源的自托管 AI 助手：多用户、多 Agent，自带 Web 控制台、
+  会话、长期记忆、模型提供商管理与 Agent 运行时，数据全部留在你自己的微服上。
+
+  【首次登录】
+  用安装时填的管理员密码登录；若留空，密码是随机生成的，写在
+  /lzcapp/var/octop/credential.txt（首次启动后请尽快在头像菜单里改密）。
+
+  【模型】
+  打开「管理 → 模型」，选一个预置提供商（腾讯云、OpenAI、Anthropic、DeepSeek、
+  Ollama 等）填 API Key 即可；也可以在环境变量里补 OPENAI_API_KEY、
+  DASHSCOPE_API_KEY 之类的键值，首次启动就对 Agent 运行时可见。
+
+  【数据】
+  数据库、凭据与 Agent 工作区都在 /lzcapp/var/octop，升级不丢。
