@@ -1,12 +1,12 @@
 application:
   subdomain: octop
   multi_instance: false
+  # Octop 自带登录（首个管理员密码由安装向导填或自动生成），它是单机自托管的
+  # 个人 AI 助手，入口默认保留微服账号校验；要让外部客户端（IM 回调、Agent API）
+  # 直连时，再把它加进 public_path。
   upstreams:
     - location: /
       backend: http://octop:8088
-      # Octop 自带登录（首个管理员密码由安装向导填或自动生成），它是单机自托管的
-      # 个人 AI 助手，入口默认保留微服账号校验；要让外部客户端（IM 回调、Agent API）
-      # 直连时，再把它加进 public_path。
 services:
   octop:
     # 官方商店交付（delivery.mode=lazycat）时由 Action 转存到懒猫镜像源并改写此行
