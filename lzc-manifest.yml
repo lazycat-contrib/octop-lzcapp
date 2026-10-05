@@ -10,8 +10,8 @@ application:
 services:
   octop:
     # 官方商店交付（delivery.mode=lazycat）时由 Action 转存到懒猫镜像源并改写此行
-    # upstream: ghcr.io/tencentcloud/octop:1.0.2b5
-    image: registry.lazycat.cloud/czyt/tencentcloud/octop:02980826266165ac
+    # upstream: ghcr.io/tencentcloud/octop:1.0.2b6
+    image: registry.lazycat.cloud/czyt/tencentcloud/octop:7fe678958085fe06
     # 镜像是 python:3.12-slim、默认 root；/lzcapp/var/octop 由平台以 root 创建，
     # 用 root 起保证数据目录可写（上游 compose 也是让容器以 root 写 /data/.octop）
     user: root

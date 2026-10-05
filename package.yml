@@ -1,5 +1,5 @@
 package: cloud.lazycat.app.octop
-version: 1.0.2-b5
+version: 1.0.2-b6
 name: Octop
 description: A smarter, self-hosted AI assistant — multi-user, multi-agent, with a full web console, long-term memory and model providers, by Tencent Cloud. MIT licensed.
 min_os_version: 1.5.0
