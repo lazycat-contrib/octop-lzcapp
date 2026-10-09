@@ -4,7 +4,7 @@
 
 - **镜像**：`ghcr.io/tencentcloud/octop`，先用 tag 路径发的 1.0.2b5。`delivery.mode: lazycat` 会把镜像转存到懒猫镜像源并改写 manifest 里的 image（缓存与加速都靠它）。
 - **版本映射**：上游 beta tag 不合法（`1.0.2b5`），按 beta 家族跟踪并用 `version_regex`/`version_template` 映射成合法 SemVer `1.0.2-b5`（与 `package.yml` 一致）。上游出 `1.0.2` 正式版时，把 `tag_regex` 换成 `^[0-9]+\.[0-9]+\.[0-9]+$` 即可切回稳定线。
-- **路由**：`/` → `octop:8088`。入口保留微服账号校验（自托管助手不必对外公开）；要让 IM 回调或外部 Agent API 直连，把 `/` 加进 `application.public_path`。
+- **路由**：`/` → `octop:8088`，`public_path: [/]`（入口直接放行，应用自带登录；IM 回调与外部 Agent API 也能直连）。
 - **环境**（照上游 Docker 文档）：
   - `HOME=/data` 是硬要求，`~/.octop` 才会落到数据目录；
   - `OCTOP_BIND_HOST=0.0.0.0`、`OCTOP_PORT=8088`；
